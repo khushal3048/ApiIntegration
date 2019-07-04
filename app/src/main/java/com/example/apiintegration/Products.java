@@ -21,6 +21,26 @@ public class Products implements Parcelable {
         this.price = price;
     }
 
+    protected Products(Parcel in) {
+        pimg = in.readString();
+        pname = in.readString();
+        brand = in.readString();
+        desc = in.readString();
+        price = in.readLong();
+    }
+
+    public static final Creator<Products> CREATOR = new Creator<Products>() {
+        @Override
+        public Products createFromParcel(Parcel in) {
+            return new Products(in);
+        }
+
+        @Override
+        public Products[] newArray(int size) {
+            return new Products[size];
+        }
+    };
+
     public String getPimg() {
         return pimg;
     }
@@ -61,4 +81,17 @@ public class Products implements Parcelable {
         this.price = price;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(pimg);
+        dest.writeString(pname);
+        dest.writeString(brand);
+        dest.writeString(desc);
+        dest.writeLong(price);
+    }
 }
